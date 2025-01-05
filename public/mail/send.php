@@ -14,7 +14,7 @@ try {
     }
 
     // Configuration email
-    $to = 'seoceane@gmail.com';
+    $to = 'seo.ceane@gmail.com';
     $subject = 'Contact ElectroBorne';
     $message = "De: {$data['name']}\nEmail: {$data['email']}\n\nMessage:\n{$data['message']}";
     $headers = "From: {$data['email']}";
