@@ -16,25 +16,30 @@ try {
         throw new Exception('Données manquantes');
     }
 
+    // Configuration SMTP
+    ini_set('SMTP', 'mail.installer-borne-recharge.fr');
+    ini_set('smtp_port', 465);
+    ini_set('username', 'contact@installer-borne-recharge.fr');
+    ini_set('password', '$bKAa47nnU04'); // Remplacez par votre vrai mot de passe
+    
     $to = 'seo.ceane@gmail.com';
     $subject = 'Contact ElectroBorne - ' . $data['name'];
     
-    // Corps du message
     $message = "De : " . $data['name'] . "\n";
     $message .= "Email : " . $data['email'] . "\n\n";
     $message .= "Message :\n" . $data['message'];
 
-    // En-têtes basiques mais essentiels
     $headers = [];
     $headers[] = 'MIME-Version: 1.0';
     $headers[] = 'Content-type: text/plain; charset=UTF-8';
-    $headers[] = 'From: contact@installer-borne-recharge.fr';
+    $headers[] = 'From: ElectroBorne <contact@installer-borne-recharge.fr>';
     $headers[] = 'Reply-To: ' . $data['email'];
     
     $sent = mail($to, $subject, $message, implode("\r\n", $headers));
     
     if (!$sent) {
-        throw new Exception('Échec de l\'envoi');
+        $error = error_get_last();
+        throw new Exception('Échec de l\'envoi: ' . ($error['message'] ?? 'Erreur inconnue'));
     }
     
     echo json_encode([
@@ -43,6 +48,7 @@ try {
     ]);
 
 } catch (Exception $e) {
+    error_log("Erreur d'envoi de mail: " . $e->getMessage());
     http_response_code(500);
     echo json_encode([
         'success' => false,
