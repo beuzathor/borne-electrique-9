@@ -1,0 +1,74 @@
+---
+import PostExcerpt from './PostExcerpt.astro';
+import type { WPPost } from '../../lib/wordpress/types';
+
+interface Props {
+  post: WPPost;
+}
+
+const { post } = Astro.props;
+const formattedDate = new Date(post.date).toLocaleDateString('fr-FR', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric'
+});
+
+// Récupérer l'URL de l'image mise en avant si disponible
+const featuredImage = post._embedded?.['wp:featuredmedia']?.[0]?.source_url;
+
+// Images de secours si pas d'image mise en avant
+const fallbackImages = [
+  'https://images.unsplash.com/photo-1593941707882-a5bba14938c7?auto=format&fit=crop&q=80&w=800&h=500',
+  'https://images.unsplash.com/photo-1633396746734-afc3445d0084?auto=format&fit=crop&q=80&w=800&h=500',
+  'https://images.unsplash.com/photo-1647166545674-ce28ce93bdca?auto=format&fit=crop&q=80&w=800&h=500'
+];
+
+const imageUrl = featuredImage || fallbackImages[Math.floor(Math.random() * fallbackImages.length)];
+---
+
+<article class="group bg-white rounded-2xl shadow-lg overflow-hidden transform hover:-translate-y-2 transition-all duration-300 hover:shadow-xl">
+  <div class="relative h-48 overflow-hidden">
+    <img 
+      src={imageUrl}
+      alt={post.title.rendered}
+      class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
+      loading="lazy"
+    />
+    <div class="absolute top-4 right-4">
+      <span class="bg-indigo-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
+        Actualité
+      </span>
+    </div>
+    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+  </div>
+
+  <div class="p-6">
+    <time datetime={post.date} class="text-sm text-indigo-600 font-semibold mb-2 block">
+      {formattedDate}
+    </time>
+
+    <h2 class="text-xl font-bold text-gray-900 mb-3 group-hover:text-indigo-600 transition-colors line-clamp-2">
+      <a href={`/blog/${post.slug}`} set:html={post.title.rendered} />
+    </h2>
+
+    <PostExcerpt 
+      title={post.title.rendered} 
+      excerpt={post.excerpt.rendered} 
+    />
+
+    <a 
+      href={`/blog/${post.slug}`}
+      class="inline-flex items-center justify-center px-6 py-2 bg-gradient-to-r from-indigo-600 to-indigo-700 text-white font-semibold rounded-lg transform hover:translate-y-[-2px] hover:shadow-lg transition-all duration-300 group/button"
+    >
+      Lire l'article
+      <svg 
+        xmlns="http://www.w3.org/2000/svg" 
+        class="h-5 w-5 ml-2 transform group-hover/button:translate-x-1 transition-transform" 
+        viewBox="0 0 20 20" 
+        fill="currentColor"
+      >
+        <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+      </svg>
+    </a>
+  </div>
+</article>

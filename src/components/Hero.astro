@@ -1,0 +1,82 @@
+---
+---
+<section class="relative bg-gradient-to-br from-indigo-600 via-blue-500 to-blue-700 text-white overflow-hidden">
+  <!-- Cercles décoratifs en arrière-plan -->
+  <div class="absolute inset-0 overflow-hidden">
+    <div class="absolute -top-16 -right-16 w-48 h-48 bg-indigo-500 rounded-full opacity-20"></div>
+    <div class="absolute -bottom-16 -left-16 w-56 h-56 bg-blue-400 rounded-full opacity-20"></div>
+    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-gradient-to-r from-blue-400 to-indigo-400 rounded-full opacity-10 animate-pulse"></div>
+  </div>
+
+  <!-- Contenu principal -->
+  <div class="container mx-auto px-4 py-8 relative">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+      <div class="space-y-4">
+        <div class="space-y-2">
+          <span class="inline-block px-3 py-1 bg-blue-700 rounded-full text-sm font-semibold">
+            🔌 Expert en recharge électrique
+          </span>
+          <h1 class="text-3xl md:text-4xl font-bold leading-tight">
+            Rechargez <span class="text-yellow-400">intelligemment</span><br/>
+            votre avenir
+          </h1>
+        </div>
+        <p class="text-base text-blue-100">
+          Découvrez les meilleures solutions de recharge pour votre véhicule électrique avec notre expertise pointue et nos conseils personnalisés.
+        </p>
+        <div class="flex flex-wrap gap-3">
+          <a href="/guide" class="inline-flex items-center px-5 py-2 bg-white text-indigo-600 rounded-full font-semibold hover:bg-indigo-50 transition-colors shadow-lg hover:shadow-xl">
+            <span>Guide complet</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-2" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+            </svg>
+          </a>
+          <a href="/blog" class="inline-flex items-center px-5 py-2 border-2 border-white text-white rounded-full font-semibold hover:bg-white hover:text-indigo-600 transition-colors">
+            Lire le blog
+          </a>
+        </div>
+      </div>
+      
+      <div class="relative">
+        <div class="relative w-full max-w-sm mx-auto">
+          <!-- Effet de lueur derrière la mascotte -->
+          <div class="absolute inset-0 bg-gradient-to-r from-blue-400 to-indigo-400 rounded-full filter blur-2xl opacity-30 animate-pulse"></div>
+          <!-- Mascotte -->
+          <img 
+            src="/mascot.svg" 
+            alt="Mascotte ElectroBorne" 
+            class="relative w-full h-auto animate-float z-10"
+          />
+          <!-- Éclairs décoratifs -->
+          <div class="absolute top-0 left-0 w-full h-full">
+            <div class="absolute top-1/4 left-0 w-4 h-4 bg-yellow-400 rounded-full animate-ping"></div>
+            <div class="absolute bottom-1/4 right-0 w-3 h-3 bg-yellow-400 rounded-full animate-ping" style="animation-delay: 1s"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(0); }
+  25% { transform: translateY(-8px) rotate(1deg); }
+  75% { transform: translateY(8px) rotate(-1deg); }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes ping {
+  75%, 100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+.animate-ping {
+  animation: ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+</style>

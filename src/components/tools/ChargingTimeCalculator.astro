@@ -1,0 +1,116 @@
+---
+---
+<div class="bg-white rounded-2xl shadow-lg p-6">
+  <h2 class="text-2xl font-bold text-gray-900 mb-6">Comparateur de temps de charge</h2>
+  
+  <form id="chargingTimeCalculator" class="space-y-6">
+    <div>
+      <label class="block text-sm font-medium text-gray-700 mb-2">
+        Capacité de la batterie (kWh)
+      </label>
+      <input 
+        type="number" 
+        name="batteryCapacity"
+        min="0"
+        step="0.1"
+        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+        required
+      />
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium text-gray-700 mb-2">
+        Niveau de charge actuel (%)
+      </label>
+      <input 
+        type="number" 
+        name="currentCharge"
+        min="0"
+        max="100"
+        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+        required
+      />
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium text-gray-700 mb-2">
+        Niveau de charge souhaité (%)
+      </label>
+      <input 
+        type="number" 
+        name="targetCharge"
+        min="0"
+        max="100"
+        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+        required
+      />
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium text-gray-700 mb-2">
+        Puissance de charge (kW)
+      </label>
+      <select 
+        name="chargingPower"
+        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+      >
+        <option value="3.7">3.7 kW (Domestique monophasé)</option>
+        <option value="7.4">7.4 kW (Wallbox monophasé)</option>
+        <option value="11">11 kW (Wallbox triphasé)</option>
+        <option value="22">22 kW (Borne AC rapide)</option>
+        <option value="50">50 kW (Borne DC rapide)</option>
+        <option value="150">150 kW (Superchargeur)</option>
+      </select>
+    </div>
+
+    <div class="pt-4">
+      <button 
+        type="submit"
+        class="w-full px-6 py-3 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 transition-colors"
+      >
+        Calculer le temps de charge
+      </button>
+    </div>
+  </form>
+
+  <div id="chargingTimeResult" class="mt-6 hidden">
+    <div class="p-4 bg-indigo-50 rounded-lg">
+      <p class="text-lg font-semibold text-indigo-900">
+        Temps de charge estimé : <span id="timeValue">0</span>
+      </p>
+    </div>
+  </div>
+</div>
+
+<script>
+document.getElementById('chargingTimeCalculator')?.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const form = e.target as HTMLFormElement;
+  const formData = new FormData(form);
+  
+  const batteryCapacity = parseFloat(formData.get('batteryCapacity') as string);
+  const currentCharge = parseFloat(formData.get('currentCharge') as string);
+  const targetCharge = parseFloat(formData.get('targetCharge') as string);
+  const chargingPower = parseFloat(formData.get('chargingPower') as string);
+
+  // Calcul du temps de charge en heures
+  const energyNeeded = batteryCapacity * (targetCharge - currentCharge) / 100;
+  const chargingTime = energyNeeded / chargingPower;
+
+  // Formatage du temps
+  const hours = Math.floor(chargingTime);
+  const minutes = Math.round((chargingTime - hours) * 60);
+  const timeString = hours > 0 
+    ? `${hours}h${minutes > 0 ? ` ${minutes}min` : ''}`
+    : `${minutes}min`;
+
+  // Affichage du résultat
+  const resultDiv = document.getElementById('chargingTimeResult');
+  const timeValue = document.getElementById('timeValue');
+  
+  if (resultDiv && timeValue) {
+    resultDiv.classList.remove('hidden');
+    timeValue.textContent = timeString;
+  }
+});
+</script>

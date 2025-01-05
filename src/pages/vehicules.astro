@@ -1,0 +1,82 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import VehicleCatalog from '../components/vehicles/VehicleCatalog.astro';
+import PageHeader from '../components/common/PageHeader.astro';
+---
+
+<Layout title="Comparateur de véhicules électriques 2024 - Guide et prix - ElectroBorne">
+  <Header />
+  <main class="min-h-screen bg-gray-50">
+    <PageHeader
+      title="Comparateur de véhicules électriques"
+      subtitle="Comparez les meilleures voitures électriques et trouvez le modèle adapté à vos besoins"
+    />
+    <div class="container mx-auto px-4 py-12">
+      <VehicleCatalog />
+    </div>
+
+    <!-- Section SEO -->
+    <section class="bg-white py-16">
+      <div class="container mx-auto px-4">
+        <div class="prose prose-indigo max-w-none">
+          <h2 class="text-3xl font-bold text-gray-900 mb-8">Guide complet pour choisir sa voiture électrique en 2024</h2>
+          
+          <div class="grid md:grid-cols-2 gap-12">
+            <div>
+              <h3 class="text-xl font-semibold mb-4">Comment choisir sa voiture électrique ?</h3>
+              <p class="text-gray-600 mb-4">
+                Le choix d'une voiture électrique dépend de plusieurs critères essentiels : autonomie, budget, usage quotidien et infrastructure de recharge disponible. Notre comparateur vous aide à analyser objectivement chaque modèle selon vos besoins spécifiques.
+              </p>
+              <ul class="list-disc list-inside text-gray-600 space-y-2">
+                <li>Autonomie réelle en conditions variées</li>
+                <li>Capacité de la batterie et temps de recharge</li>
+                <li>Prix d'achat et coût total de possession</li>
+                <li>Équipements et technologies embarquées</li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 class="text-xl font-semibold mb-4">Pourquoi utiliser notre comparateur ?</h3>
+              <p class="text-gray-600 mb-4">
+                Notre comparateur de voitures électriques offre une analyse détaillée et impartiale de tous les modèles disponibles en France. Nous mettons régulièrement à jour nos données pour vous fournir les informations les plus précises.
+              </p>
+              <ul class="list-disc list-inside text-gray-600 space-y-2">
+                <li>Données techniques vérifiées et actualisées</li>
+                <li>Comparaison des prix et bonus écologiques</li>
+                <li>Retours d'expérience utilisateurs</li>
+                <li>Conseils d'experts indépendants</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="mt-12">
+            <h3 class="text-xl font-semibold mb-4">Les critères à prendre en compte</h3>
+            <div class="grid md:grid-cols-3 gap-8">
+              <div>
+                <h4 class="font-medium text-gray-900 mb-2">Autonomie et recharge</h4>
+                <p class="text-gray-600">
+                  L'autonomie réelle et les options de recharge sont cruciales. Analysez vos besoins quotidiens et les infrastructures disponibles près de chez vous.
+                </p>
+              </div>
+              <div>
+                <h4 class="font-medium text-gray-900 mb-2">Budget et aides</h4>
+                <p class="text-gray-600">
+                  Considérez le prix d'achat, les aides gouvernementales, mais aussi les coûts d'utilisation et d'entretien sur le long terme.
+                </p>
+              </div>
+              <div>
+                <h4 class="font-medium text-gray-900 mb-2">Usage et praticité</h4>
+                <p class="text-gray-600">
+                  Évaluez vos besoins en termes d'espace, de confort et de performances selon votre utilisation principale.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>

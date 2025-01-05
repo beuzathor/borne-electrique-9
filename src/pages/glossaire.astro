@@ -1,0 +1,44 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import PageHeader from '../components/common/PageHeader.astro';
+
+---
+
+<Layout title="Glossaire - ElectroBorne">
+  <Header />
+  <main class="min-h-screen bg-gray-50">
+    <PageHeader
+      title="Glossaire"
+      subtitle="Les termes essentiels de la recharge électrique"
+    />
+    
+    <div class="container mx-auto px-4 py-12">
+      <div class="max-w-4xl mx-auto bg-white rounded-2xl shadow-lg p-8">
+        <div class="space-y-8">
+          <div>
+            <h3 class="text-xl font-bold text-gray-900 mb-2">IRVE</h3>
+            <p class="text-gray-600">Infrastructure de Recharge pour Véhicules Électriques. Désigne l'ensemble des équipements nécessaires à la recharge.</p>
+          </div>
+
+          <div>
+            <h3 class="text-xl font-bold text-gray-900 mb-2">Type 2</h3>
+            <p class="text-gray-600">Connecteur standard européen pour la recharge en courant alternatif (AC).</p>
+          </div>
+
+          <div>
+            <h3 class="text-xl font-bold text-gray-900 mb-2">CCS Combo</h3>
+            <p class="text-gray-600">Combined Charging System. Standard européen pour la recharge rapide en courant continu (DC).</p>
+          </div>
+
+          <div>
+            <h3 class="text-xl font-bold text-gray-900 mb-2">kW</h3>
+            <p class="text-gray-600">Kilowatt. Unité de mesure de la puissance de charge.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <Footer />
+</Layout>

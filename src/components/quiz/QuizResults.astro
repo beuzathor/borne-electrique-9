@@ -1,0 +1,55 @@
+---
+interface Props {
+  score: number;
+  totalQuestions: number;
+  answers: {
+    question: string;
+    userAnswer: string;
+    correctAnswer: string;
+    isCorrect: boolean;
+    explanation: string;
+  }[];
+}
+
+const { score, totalQuestions, answers } = Astro.props;
+---
+<div class="bg-white rounded-2xl shadow-lg p-8 max-w-2xl mx-auto">
+  <div class="text-center mb-8">
+    <h3 class="text-2xl font-bold text-gray-900 mb-4">Quiz terminé !</h3>
+    <p class="text-xl text-gray-600">
+      Votre score : <span class="font-bold text-indigo-600">{score}/{totalQuestions}</span>
+    </p>
+  </div>
+
+  <div class="space-y-6 mb-8">
+    {answers.map((answer, index) => (
+      <div class={`p-4 rounded-lg ${answer.isCorrect ? 'bg-green-50' : 'bg-red-50'}`}>
+        <p class="font-semibold text-gray-900 mb-2">Question {index + 1}: {answer.question}</p>
+        <div class="space-y-1 text-sm">
+          <p>
+            <span class="text-gray-600">Votre réponse :</span>
+            <span class={answer.isCorrect ? 'text-green-600' : 'text-red-600'}>
+              {answer.userAnswer}
+            </span>
+          </p>
+          {!answer.isCorrect && (
+            <p>
+              <span class="text-gray-600">Bonne réponse :</span>
+              <span class="text-green-600">{answer.correctAnswer}</span>
+            </p>
+          )}
+          <p class="text-gray-600 mt-2">{answer.explanation}</p>
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <div class="text-center">
+    <button 
+      onclick="location.reload()"
+      class="px-6 py-3 bg-indigo-600 text-white rounded-full font-semibold hover:bg-indigo-700 transition-colors"
+    >
+      Recommencer le quiz
+    </button>
+  </div>
+</div>

@@ -1,0 +1,20 @@
+---
+import { electricVehicles } from '../../lib/data/electricVehicles';
+import VehicleGrid from './VehicleGrid.astro';
+import VehicleFilters from './VehicleFilters.astro';
+import VehicleSearch from './VehicleSearch.astro';
+---
+
+<div class="space-y-8">
+  <div class="flex flex-col md:flex-row gap-6">
+    <div class="md:w-1/4">
+      <VehicleFilters />
+    </div>
+    <div class="md:w-3/4">
+      <div class="mb-6">
+        <VehicleSearch />
+      </div>
+      <VehicleGrid vehicles={electricVehicles} />
+    </div>
+  </div>
+</div>

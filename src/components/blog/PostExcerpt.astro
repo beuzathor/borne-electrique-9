@@ -1,0 +1,16 @@
+---
+import { cleanWordPressExcerpt } from '../../lib/excerptCleaner';
+
+interface Props {
+  title: string;
+  excerpt: string;
+}
+
+const { title, excerpt } = Astro.props;
+
+// Utilise l'extrait nettoyé s'il existe, sinon crée une description à partir du titre
+const description = excerpt ? 
+  cleanWordPressExcerpt(excerpt) : 
+  `Découvrez notre article complet sur ${title.replace(/<[^>]*>/g, '')}`;
+---
+<p class="text-gray-600 mb-6 line-clamp-4 min-h-[6rem]">{description}</p>

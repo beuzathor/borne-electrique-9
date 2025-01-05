@@ -1,0 +1,37 @@
+---
+import type { WordPressPost } from '../../../lib/wordpress/types';
+import PostCard from '../PostCard.astro';
+
+interface Props {
+  currentPost: WordPressPost;
+  allPosts: WordPressPost[];
+}
+
+const { currentPost, allPosts } = Astro.props;
+
+// Get posts from the same categories, excluding the current post
+const relatedPosts = allPosts
+  .filter(post => 
+    post.id !== currentPost.id && 
+    post.categories.some(cat => currentPost.categories.includes(cat))
+  )
+  // Shuffle array
+  .sort(() => Math.random() - 0.5)
+  // Take first 3 posts
+  .slice(0, 3);
+---
+
+{relatedPosts.length > 0 && (
+  <section class="py-16 border-t border-gray-100">
+    <div class="max-w-4xl mx-auto">
+      <h2 class="text-2xl font-bold text-gray-900 mb-8">
+        Articles qui pourraient vous intéresser
+      </h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {relatedPosts.map(post => (
+          <PostCard post={post} />
+        ))}
+      </div>
+    </div>
+  </section>
+)}

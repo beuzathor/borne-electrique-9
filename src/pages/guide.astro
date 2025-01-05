@@ -1,0 +1,186 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import PageHeader from '../components/common/PageHeader.astro';
+---
+
+<Layout title="Guide d'achat borne de recharge 2024 - Comment choisir sa borne ? - ElectroBorne">
+  <Header />
+  <main class="min-h-screen bg-gray-50">
+    <PageHeader
+      title="Guide d'achat borne de recharge 2024"
+      subtitle="Tout ce qu'il faut savoir pour choisir et installer sa borne de recharge"
+    />
+    
+    <div class="container mx-auto px-4 py-12">
+      <article class="max-w-4xl mx-auto bg-white rounded-2xl shadow-lg p-8">
+        <div class="prose prose-indigo max-w-none">
+          <!-- Introduction -->
+          <p class="lead text-xl text-gray-600">
+            Vous envisagez d'installer une borne de recharge pour votre véhicule électrique ? Ce guide complet vous accompagne dans votre choix pour trouver la solution adaptée à vos besoins.
+          </p>
+
+          <!-- Table des matières -->
+          <div class="my-8 p-6 bg-gray-50 rounded-lg">
+            <h2 class="text-xl font-bold mb-4">Table des matières</h2>
+            <nav>
+              <ul class="space-y-2">
+                <li><a href="#criteres">1. Critères de choix essentiels</a></li>
+                <li><a href="#types">2. Types de bornes disponibles</a></li>
+                <li><a href="#installation">3. Installation et conformité</a></li>
+                <li><a href="#couts">4. Coûts et aides financières</a></li>
+                <li><a href="#entretien">5. Entretien et maintenance</a></li>
+              </ul>
+            </nav>
+          </div>
+
+          <!-- Section 1 -->
+          <section id="criteres">
+            <h2 class="text-2xl font-bold">1. Critères de choix essentiels</h2>
+            
+            <h3>Puissance de charge</h3>
+            <p>La puissance de votre borne est le premier critère à considérer :</p>
+            <ul>
+              <li><strong>3,7 kW</strong> : Charge lente, adaptée aux petites batteries</li>
+              <li><strong>7,4 kW</strong> : Standard pour usage domestique</li>
+              <li><strong>11 kW</strong> : Installation triphasée, charge plus rapide</li>
+              <li><strong>22 kW</strong> : Solution professionnelle ou premium</li>
+            </ul>
+
+            <h3>Compatibilité véhicule</h3>
+            <p>Vérifiez la capacité de charge maximale de votre véhicule. Une borne plus puissante que ce que peut accepter votre voiture est un investissement inutile.</p>
+          </section>
+
+          <!-- Section 2 -->
+          <section id="types" class="mt-12">
+            <h2 class="text-2xl font-bold">2. Types de bornes disponibles</h2>
+            
+            <div class="grid md:grid-cols-2 gap-6 my-6">
+              <div class="bg-gray-50 p-6 rounded-lg">
+                <h3 class="font-bold mb-3">Borne murale basique</h3>
+                <ul class="space-y-2">
+                  <li>✓ Installation simple</li>
+                  <li>✓ Prix abordable</li>
+                  <li>✓ Idéale pour usage domestique</li>
+                  <li>✗ Fonctionnalités limitées</li>
+                </ul>
+              </div>
+
+              <div class="bg-gray-50 p-6 rounded-lg">
+                <h3 class="font-bold mb-3">Borne connectée</h3>
+                <ul class="space-y-2">
+                  <li>✓ Gestion à distance</li>
+                  <li>✓ Programmation horaire</li>
+                  <li>✓ Suivi de consommation</li>
+                  <li>✓ Mises à jour à distance</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <!-- Section 3 -->
+          <section id="installation" class="mt-12">
+            <h2 class="text-2xl font-bold">3. Installation et conformité</h2>
+            
+            <h3>Prérequis techniques</h3>
+            <ul>
+              <li>Tableau électrique aux normes</li>
+              <li>Puissance disponible suffisante</li>
+              <li>Protection différentielle adaptée</li>
+              <li>Mise à la terre conforme</li>
+            </ul>
+
+            <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 my-6">
+              <p class="text-yellow-700">
+                <strong>Important :</strong> L'installation doit être réalisée par un électricien qualifié IRVE pour garantir la sécurité et bénéficier des aides.
+              </p>
+            </div>
+          </section>
+
+          <!-- Section 4 -->
+          <section id="couts" class="mt-12">
+            <h2 class="text-2xl font-bold">4. Coûts et aides financières</h2>
+            
+            <h3>Budget à prévoir</h3>
+            <div class="overflow-x-auto">
+              <table class="min-w-full">
+                <thead>
+                  <tr>
+                    <th>Type de borne</th>
+                    <th>Prix HT</th>
+                    <th>Installation</th>
+                    <th>Total moyen TTC</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Basique 7,4 kW</td>
+                    <td>500-800€</td>
+                    <td>300-600€</td>
+                    <td>800-1400€</td>
+                  </tr>
+                  <tr>
+                    <td>Connectée 7,4 kW</td>
+                    <td>800-1200€</td>
+                    <td>400-700€</td>
+                    <td>1200-1900€</td>
+                  </tr>
+                  <tr>
+                    <td>Triphasée 11 kW</td>
+                    <td>1000-1500€</td>
+                    <td>500-800€</td>
+                    <td>1500-2300€</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h3 class="mt-6">Aides disponibles</h3>
+            <ul>
+              <li>Crédit d'impôt : 300€</li>
+              <li>Prime ADVENIR : jusqu'à 960€</li>
+              <li>Aides locales : variables selon régions</li>
+              <li>TVA réduite : 5,5%</li>
+            </ul>
+          </section>
+
+          <!-- Section 5 -->
+          <section id="entretien" class="mt-12">
+            <h2 class="text-2xl font-bold">5. Entretien et maintenance</h2>
+            
+            <h3>Maintenance préventive</h3>
+            <ul>
+              <li>Vérification annuelle des connexions</li>
+              <li>Contrôle des protections électriques</li>
+              <li>Nettoyage des points de contact</li>
+              <li>Mise à jour du logiciel (bornes connectées)</li>
+            </ul>
+
+            <div class="bg-blue-50 p-6 rounded-lg mt-6">
+              <h4 class="font-bold text-blue-900 mb-2">Conseils d'utilisation</h4>
+              <ul class="text-blue-800 space-y-2">
+                <li>✓ Protégez votre borne des intempéries</li>
+                <li>✓ Évitez les tensions sur le câble</li>
+                <li>✓ Vérifiez régulièrement l'état du câble</li>
+                <li>✓ Conservez les documents d'installation</li>
+              </ul>
+            </div>
+          </section>
+
+          <!-- Conclusion -->
+          <section class="mt-12 bg-indigo-50 p-6 rounded-lg">
+            <h2 class="text-2xl font-bold text-indigo-900">Pour bien choisir sa borne</h2>
+            <div class="space-y-4 text-indigo-800">
+              <p>✓ Analysez vos besoins quotidiens</p>
+              <p>✓ Vérifiez la compatibilité avec votre véhicule</p>
+              <p>✓ Faites appel à un professionnel qualifié</p>
+              <p>✓ Anticipez vos besoins futurs</p>
+            </div>
+          </section>
+        </div>
+      </article>
+    </div>
+  </main>
+  <Footer />
+</Layout>

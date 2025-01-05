@@ -1,0 +1,86 @@
+---
+import type { ElectricVehicle } from '../../lib/data/electricVehicles';
+import VehicleCard from './VehicleCard.astro';
+
+interface Props {
+  vehicles: ElectricVehicle[];
+}
+
+const { vehicles } = Astro.props;
+---
+
+<div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6" id="vehicleGrid">
+  {vehicles.map(vehicle => (
+    <div 
+      class="vehicle-card transform-gpu transition-all duration-300 ease-in-out"
+      data-vehicle={JSON.stringify(vehicle)}
+    >
+      <VehicleCard vehicle={vehicle} />
+    </div>
+  ))}
+</div>
+
+<script>
+  import type { ElectricVehicle } from '../../lib/data/electricVehicles';
+  import { filterVehicles } from '../../lib/utils/vehicleFilters';
+
+  const grid = document.getElementById('vehicleGrid');
+  if (!grid) throw new Error('Vehicle grid not found');
+
+  const cards = Array.from(grid.querySelectorAll('.vehicle-card'));
+  const initialVehicles = cards.map(card => 
+    JSON.parse((card as HTMLElement).dataset.vehicle || '{}')
+  );
+
+  function updateVisibility(filteredVehicles: ElectricVehicle[]) {
+    const filteredIds = new Set(filteredVehicles.map(v => v.id));
+    
+    cards.forEach(card => {
+      const vehicle = JSON.parse((card as HTMLElement).dataset.vehicle || '{}');
+      if (filteredIds.has(vehicle.id)) {
+        card.style.display = '';
+        requestAnimationFrame(() => {
+          card.style.opacity = '1';
+          card.style.transform = 'scale(1)';
+        });
+      } else {
+        card.style.opacity = '0';
+        card.style.transform = 'scale(0.95)';
+        setTimeout(() => {
+          if (card.style.opacity === '0') {
+            card.style.display = 'none';
+          }
+        }, 300);
+      }
+    });
+  }
+
+  document.addEventListener('vehicle-filter', (e: Event) => {
+    const customEvent = e as CustomEvent<{filters: {
+      categories: string[];
+      priceRanges: Array<{min: number; max: number;}>;
+      search?: string;
+    }}>;
+    
+    const filteredVehicles = filterVehicles(initialVehicles, customEvent.detail.filters);
+    updateVisibility(filteredVehicles);
+  });
+
+  document.addEventListener('vehicle-search', (e: Event) => {
+    const customEvent = e as CustomEvent<{query: string}>;
+    const filteredVehicles = filterVehicles(initialVehicles, {
+      categories: [],
+      priceRanges: [],
+      search: customEvent.detail.query
+    });
+    updateVisibility(filteredVehicles);
+  });
+</script>
+
+<style>
+  .vehicle-card {
+    opacity: 1;
+    transform: scale(1);
+    will-change: transform, opacity;
+  }
+</style>

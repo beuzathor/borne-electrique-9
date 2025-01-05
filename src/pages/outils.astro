@@ -1,0 +1,30 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import PageHeader from '../components/common/PageHeader.astro';
+import RangeCalculator from '../components/tools/RangeCalculator.astro';
+import ChargingTimeCalculator from '../components/tools/ChargingTimeCalculator.astro';
+import ChargingCostCalculator from '../components/tools/ChargingCostCalculator.astro';
+import SavingsCalculator from '../components/tools/SavingsCalculator.astro';
+---
+
+<Layout title="Outils de calcul - ElectroBorne">
+  <Header />
+  <main class="min-h-screen bg-gray-50">
+    <PageHeader
+      title="Outils de calcul"
+      subtitle="Estimez vos besoins et économies en matière de recharge électrique"
+    />
+    
+    <div class="container mx-auto px-4 py-12">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <RangeCalculator />
+        <ChargingTimeCalculator />
+        <ChargingCostCalculator />
+        <SavingsCalculator />
+      </div>
+    </div>
+  </main>
+  <Footer />
+</Layout>

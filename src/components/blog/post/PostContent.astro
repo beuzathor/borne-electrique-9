@@ -1,0 +1,22 @@
+---
+interface Props {
+  content: string;
+}
+
+const { content } = Astro.props;
+---
+<article class="prose prose-lg prose-indigo max-w-none prose-a:text-indigo-600 hover:prose-a:text-indigo-500 prose-a:no-underline hover:prose-a:underline">
+  <div set:html={content} />
+</article>
+
+<style>
+  /* Styles supplémentaires pour les liens si nécessaire */
+  :global(.prose a) {
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  
+  :global(.prose a:hover) {
+    text-decoration: underline;
+  }
+</style>

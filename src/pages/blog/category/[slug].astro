@@ -1,0 +1,65 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Header from '../../../components/Header.astro';
+import Footer from '../../../components/Footer.astro';
+import PostCard from '../../../components/blog/PostCard.astro';
+import CategoryHeader from '../../../components/blog/CategoryHeader.astro';
+import Pagination from '../../../components/common/Pagination.astro';
+import { getCategories } from '../../../lib/wordpress/categories';
+import { getPostsByCategory } from '../../../lib/wordpress/categories';
+import { cleanHtml } from '../../../lib/wordpress/utils';
+
+export async function getStaticPaths() {
+  const response = await getCategories();
+  const categories = response.data || [];
+  
+  return categories.map(category => ({
+    params: { slug: category.slug },
+    props: { category }
+  }));
+}
+
+const { category } = Astro.props;
+const response = await getPostsByCategory(category.id, 1);
+const posts = response.data || [];
+const currentPage = 1;
+---
+
+<Layout title={`${cleanHtml(category.name)} - ElectroBorne`}>
+  <Header />
+  <main class="bg-gray-50 min-h-screen">
+    <CategoryHeader 
+      category={{
+        name: cleanHtml(category.name),
+        description: category.description,
+        count: category.count
+      }} 
+      showDescription={true} 
+    />
+    
+    <div class="container mx-auto px-4 py-12">
+      {response.error ? (
+        <div class="text-center py-12">
+          <p class="text-red-600">Une erreur est survenue lors du chargement des articles</p>
+        </div>
+      ) : (
+        <>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {posts.map(post => (
+              <PostCard post={post} />
+            ))}
+          </div>
+          
+          {response.totalPages > 1 && (
+            <Pagination 
+              currentPage={currentPage} 
+              totalPages={response.totalPages} 
+              baseUrl={`/blog/category/${category.slug}`} 
+            />
+          )}
+        </>
+      )}
+    </div>
+  </main>
+  <Footer />
+</Layout>

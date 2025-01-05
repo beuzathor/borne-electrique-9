@@ -1,0 +1,36 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import Quiz from '../components/quiz/Quiz.astro';
+import RecentPosts from '../components/RecentPosts.astro';
+import ChargingStationMap from '../components/map/ChargingStationMap.astro';
+import Newsletter from '../components/Newsletter.astro';
+import TestimonialSection from '../components/testimonials/TestimonialSection.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout title="ElectroBorne - Expert en bornes de recharge électrique">
+  <Header />
+  <main>
+    <Hero />
+    <Quiz />
+    <RecentPosts />
+    <section class="py-16 bg-white">
+      <div class="container mx-auto px-4">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl font-bold text-gray-900 mb-4">
+            Trouvez les bornes de recharge près de chez vous
+          </h2>
+          <p class="text-xl text-gray-600">
+            Carte interactive des stations de recharge pour véhicules électriques
+          </p>
+        </div>
+        <ChargingStationMap />
+      </div>
+    </section>
+    <Newsletter />
+    <TestimonialSection />
+  </main>
+  <Footer />
+</Layout>

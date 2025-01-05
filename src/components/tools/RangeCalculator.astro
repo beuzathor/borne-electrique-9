@@ -1,0 +1,91 @@
+---
+---
+<div class="bg-white rounded-2xl shadow-lg p-6">
+  <h2 class="text-2xl font-bold text-gray-900 mb-6">Calculateur d'autonomie</h2>
+  
+  <form id="rangeCalculator" class="space-y-6">
+    <div>
+      <label class="block text-sm font-medium text-gray-700 mb-2">
+        Capacité de la batterie (kWh)
+      </label>
+      <input 
+        type="number" 
+        name="batteryCapacity"
+        min="0"
+        step="0.1"
+        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+        required
+      />
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium text-gray-700 mb-2">
+        Consommation moyenne (kWh/100km)
+      </label>
+      <input 
+        type="number" 
+        name="consumption"
+        min="0"
+        step="0.1"
+        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+        required
+      />
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium text-gray-700 mb-2">
+        Conditions de route
+      </label>
+      <select 
+        name="conditions"
+        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+      >
+        <option value="1">Conditions optimales</option>
+        <option value="0.9">Route mixte</option>
+        <option value="0.8">Autoroute</option>
+        <option value="0.7">Conditions difficiles (froid, pluie)</option>
+      </select>
+    </div>
+
+    <div class="pt-4">
+      <button 
+        type="submit"
+        class="w-full px-6 py-3 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 transition-colors"
+      >
+        Calculer l'autonomie
+      </button>
+    </div>
+  </form>
+
+  <div id="rangeResult" class="mt-6 hidden">
+    <div class="p-4 bg-indigo-50 rounded-lg">
+      <p class="text-lg font-semibold text-indigo-900">
+        Autonomie estimée : <span id="rangeValue">0</span> km
+      </p>
+    </div>
+  </div>
+</div>
+
+<script>
+document.getElementById('rangeCalculator')?.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const form = e.target as HTMLFormElement;
+  const formData = new FormData(form);
+  
+  const batteryCapacity = parseFloat(formData.get('batteryCapacity') as string);
+  const consumption = parseFloat(formData.get('consumption') as string);
+  const conditions = parseFloat(formData.get('conditions') as string);
+
+  // Calcul de l'autonomie
+  const range = (batteryCapacity / consumption) * 100 * conditions;
+
+  // Affichage du résultat
+  const resultDiv = document.getElementById('rangeResult');
+  const rangeValue = document.getElementById('rangeValue');
+  
+  if (resultDiv && rangeValue) {
+    resultDiv.classList.remove('hidden');
+    rangeValue.textContent = Math.round(range).toString();
+  }
+});
+</script>

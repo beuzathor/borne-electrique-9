@@ -1,0 +1,46 @@
+---
+interface Props {
+  brand: string;
+  model: string;
+  id: string;
+  className?: string;
+}
+
+const { brand, model, id, className = '' } = Astro.props;
+
+// Fonction pour générer une image de marque stylisée en SVG
+function getBrandImage(brand: string): string {
+  const colors: Record<string, { bg: string; text: string }> = {
+    'Tesla': { bg: '#e82127', text: '#ffffff' },
+    'Renault': { bg: '#ffc600', text: '#000000' },
+    'Peugeot': { bg: '#172b4d', text: '#ffffff' },
+    'BMW': { bg: '#0066b1', text: '#ffffff' },
+    'Porsche': { bg: '#000000', text: '#ffffff' },
+    'Volkswagen': { bg: '#001e50', text: '#ffffff' },
+    'Hyundai': { bg: '#002c5f', text: '#ffffff' },
+    'Kia': { bg: '#bb162b', text: '#ffffff' },
+    'Mercedes': { bg: '#000000', text: '#ffffff' },
+    'Audi': { bg: '#000000', text: '#ffffff' }
+  };
+
+  const style = colors[brand] || { bg: '#4f46e5', text: '#ffffff' };
+  
+  return `data:image/svg+xml,${encodeURIComponent(`
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500">
+      <rect width="800" height="500" fill="${style.bg}"/>
+      <text x="400" y="250" font-family="system-ui" font-size="80" fill="${style.text}" text-anchor="middle" dominant-baseline="middle">${brand}</text>
+    </svg>
+  `)}`;
+}
+
+const brandImage = getBrandImage(brand);
+---
+
+<div class={`relative overflow-hidden ${className}`}>
+  <img 
+    src={brandImage}
+    alt={`${brand} ${model}`}
+    class="w-full h-full object-cover transition-opacity duration-300"
+    loading="lazy"
+  />
+</div>

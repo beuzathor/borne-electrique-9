@@ -1,0 +1,48 @@
+---
+interface Props {
+  category: {
+    name: string;
+    description?: string;
+    count: number;
+  };
+  showDescription?: boolean;
+}
+
+const { category, showDescription = true } = Astro.props;
+
+// Formatage du nombre d'articles
+const articleText = category.count > 1 ? 'articles' : 'article';
+const countText = `${category.count} ${articleText}`;
+
+// Clean up description from HTML tags if present
+const cleanDescription = category.description?.replace(/<[^>]*>/g, '');
+---
+<div class="relative bg-gradient-to-br from-indigo-600 to-indigo-900 text-white py-16 md:py-24 overflow-hidden">
+  <!-- Motif décoratif -->
+  <div class="absolute inset-0 overflow-hidden">
+    <div class="absolute -top-16 -right-16 w-48 h-48 bg-indigo-500 rounded-full opacity-20"></div>
+    <div class="absolute -bottom-16 -left-16 w-56 h-56 bg-indigo-400 rounded-full opacity-20"></div>
+    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-gradient-to-r from-indigo-400 to-blue-400 rounded-full opacity-10 animate-pulse"></div>
+  </div>
+
+  <!-- Contenu -->
+  <div class="container mx-auto px-4 relative">
+    <div class="text-center max-w-4xl mx-auto">
+      <h1 class="text-4xl md:text-5xl font-bold mb-6 leading-tight">
+        {category.name}
+      </h1>
+      
+      {showDescription && cleanDescription && (
+        <p class="text-xl text-indigo-100 mb-6">
+          {cleanDescription}
+        </p>
+      )}
+
+      <div class="inline-flex items-center px-4 py-2 bg-indigo-700 bg-opacity-50 rounded-full">
+        <span class="text-lg text-white font-medium">
+          {countText}
+        </span>
+      </div>
+    </div>
+  </div>
+</div>

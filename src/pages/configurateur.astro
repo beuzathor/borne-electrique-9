@@ -1,0 +1,26 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import PageHeader from '../components/common/PageHeader.astro';
+import Configurator from '../components/configurator/Configurator.astro';
+---
+
+<Layout title="Configurateur de borne - ElectroBorne">
+  <Header />
+  <main class="min-h-screen bg-gray-50">
+    <PageHeader
+      title="Configurateur de borne"
+      subtitle="Trouvez la borne de recharge adaptée à vos besoins"
+    >
+      <p class="mt-4 text-indigo-100 max-w-2xl mx-auto">
+        Répondez à quelques questions simples pour obtenir une recommandation personnalisée
+      </p>
+    </PageHeader>
+    
+    <div class="container mx-auto px-4 py-12">
+      <Configurator />
+    </div>
+  </main>
+  <Footer />
+</Layout>

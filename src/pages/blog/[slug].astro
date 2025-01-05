@@ -1,0 +1,50 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import PostHero from '../../components/blog/post/PostHero.astro';
+import PostContent from '../../components/blog/post/PostContent.astro';
+import RelatedPosts from '../../components/blog/post/RelatedPosts.astro';
+import { getPosts } from '../../lib/wordpress/posts';
+import { getPostBySlug } from '../../lib/wordpress/posts';
+
+export async function getStaticPaths() {
+  const response = await getPosts(1);
+  const posts = response.data || [];
+  return posts.map(post => ({
+    params: { slug: post.slug },
+    props: { post, allPosts: posts }
+  }));
+}
+
+const { post, allPosts } = Astro.props;
+
+if (!post) {
+  return new Response(null, {
+    status: 404,
+    statusText: 'Not found'
+  });
+}
+
+// Get featured image URL from _embedded data if available
+const featuredImage = post._embedded?.['wp:featuredmedia']?.[0]?.source_url;
+---
+
+<Layout title={post.title.rendered}>
+  <Header />
+  <main class="min-h-screen bg-white">
+    <PostHero 
+      title={post.title.rendered} 
+      date={post.date}
+      featuredImage={featuredImage}
+    />
+    
+    <div class="container mx-auto px-4 py-12">
+      <div class="max-w-4xl mx-auto">
+        <PostContent content={post.content.rendered} />
+        <RelatedPosts currentPost={post} allPosts={allPosts} />
+      </div>
+    </div>
+  </main>
+  <Footer />
+</Layout>

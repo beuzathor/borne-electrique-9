@@ -1,0 +1,152 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import PageHeader from '../components/common/PageHeader.astro';
+---
+
+<Layout title="FAQ Bornes de recharge 2024 - Questions fréquentes sur les bornes électriques - ElectroBorne">
+  <Header />
+  <main class="min-h-screen bg-gray-50">
+    <PageHeader
+      title="Questions fréquentes sur les bornes de recharge"
+      subtitle="Toutes les réponses à vos questions sur l'installation et l'utilisation des bornes de recharge"
+    />
+    
+    <div class="container mx-auto px-4 py-12">
+      <div class="max-w-4xl mx-auto bg-white rounded-2xl shadow-lg p-8">
+        <!-- Introduction -->
+        <p class="text-lg text-gray-600 mb-8">
+          Retrouvez les réponses aux questions les plus fréquentes sur les bornes de recharge pour véhicules électriques. Notre équipe d'experts a rassemblé toutes les informations essentielles pour vous aider.
+        </p>
+
+        <!-- Questions générales -->
+        <section class="mb-12">
+          <h2 class="text-2xl font-bold text-gray-900 mb-6">Questions générales sur les bornes</h2>
+          
+          <div class="space-y-6">
+            <div class="p-6 bg-gray-50 rounded-lg">
+              <h3 class="text-xl font-bold text-gray-900 mb-3">Quelle puissance de borne choisir pour ma voiture électrique ?</h3>
+              <p class="text-gray-600">La puissance idéale dépend de plusieurs facteurs :</p>
+              <ul class="list-disc list-inside mt-2 text-gray-600">
+                <li>Pour un usage quotidien : 7,4 kW suffisent généralement</li>
+                <li>Pour une recharge plus rapide : 11 kW (nécessite du triphasé)</li>
+                <li>Pour un usage professionnel : 22 kW peuvent être appropriés</li>
+              </ul>
+            </div>
+
+            <div class="p-6 bg-gray-50 rounded-lg">
+              <h3 class="text-xl font-bold text-gray-900 mb-3">Combien de temps faut-il pour recharger complètement un véhicule électrique ?</h3>
+              <p class="text-gray-600">Le temps de charge dépend de plusieurs paramètres :</p>
+              <ul class="list-disc list-inside mt-2 text-gray-600">
+                <li>Borne 7,4 kW : 6-8 heures pour une charge complète</li>
+                <li>Borne 11 kW : 4-6 heures en moyenne</li>
+                <li>Borne 22 kW : 2-3 heures si le véhicule est compatible</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- Installation et coûts -->
+        <section class="mb-12">
+          <h2 class="text-2xl font-bold text-gray-900 mb-6">Installation et coûts</h2>
+          
+          <div class="space-y-6">
+            <div class="p-6 bg-gray-50 rounded-lg">
+              <h3 class="text-xl font-bold text-gray-900 mb-3">Quel est le coût total d'installation d'une borne ?</h3>
+              <p class="text-gray-600">Le coût total comprend :</p>
+              <ul class="list-disc list-inside mt-2 text-gray-600">
+                <li>Prix de la borne : 500-1500€</li>
+                <li>Installation : 300-800€</li>
+                <li>Mise aux normes éventuelle : 200-500€</li>
+                <li>Total moyen : 800-2000€ avant aides</li>
+              </ul>
+            </div>
+
+            <div class="p-6 bg-gray-50 rounded-lg">
+              <h3 class="text-xl font-bold text-gray-900 mb-3">Quelles sont les aides disponibles en 2024 ?</h3>
+              <p class="text-gray-600">Plusieurs aides sont cumulables :</p>
+              <ul class="list-disc list-inside mt-2 text-gray-600">
+                <li>Crédit d'impôt : 300€</li>
+                <li>Prime ADVENIR : jusqu'à 960€</li>
+                <li>Aides régionales : variables selon les zones</li>
+                <li>TVA réduite à 5,5%</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- Aspects techniques -->
+        <section class="mb-12">
+          <h2 class="text-2xl font-bold text-gray-900 mb-6">Questions techniques</h2>
+          
+          <div class="space-y-6">
+            <div class="p-6 bg-gray-50 rounded-lg">
+              <h3 class="text-xl font-bold text-gray-900 mb-3">Quelle protection électrique est nécessaire ?</h3>
+              <p class="text-gray-600">Une installation aux normes nécessite :</p>
+              <ul class="list-disc list-inside mt-2 text-gray-600">
+                <li>Différentiel 30mA type B</li>
+                <li>Disjoncteur adapté à la puissance</li>
+                <li>Mise à la terre conforme</li>
+                <li>Circuit dédié</li>
+              </ul>
+            </div>
+
+            <div class="p-6 bg-gray-50 rounded-lg">
+              <h3 class="text-xl font-bold text-gray-900 mb-3">Ma borne est-elle compatible avec tous les véhicules ?</h3>
+              <p class="text-gray-600">Les bornes domestiques utilisent le standard européen Type 2, compatible avec tous les véhicules électriques vendus en Europe. Vérifiez simplement :</p>
+              <ul class="list-disc list-inside mt-2 text-gray-600">
+                <li>La puissance maximale acceptée par votre véhicule</li>
+                <li>Le type de courant (monophasé/triphasé)</li>
+                <li>La compatibilité du câble de recharge</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- Entretien et maintenance -->
+        <section class="mb-12">
+          <h2 class="text-2xl font-bold text-gray-900 mb-6">Entretien et maintenance</h2>
+          
+          <div class="space-y-6">
+            <div class="p-6 bg-gray-50 rounded-lg">
+              <h3 class="text-xl font-bold text-gray-900 mb-3">Quelle maintenance pour ma borne de recharge ?</h3>
+              <p class="text-gray-600">L'entretien régulier comprend :</p>
+              <ul class="list-disc list-inside mt-2 text-gray-600">
+                <li>Vérification annuelle des connexions</li>
+                <li>Test des protections électriques</li>
+                <li>Nettoyage des contacts</li>
+                <li>Mise à jour du logiciel (bornes connectées)</li>
+              </ul>
+            </div>
+
+            <div class="p-6 bg-gray-50 rounded-lg">
+              <h3 class="text-xl font-bold text-gray-900 mb-3">Quelle est la durée de vie d'une borne ?</h3>
+              <p class="text-gray-600">Une borne de qualité dure généralement :</p>
+              <ul class="list-disc list-inside mt-2 text-gray-600">
+                <li>8 à 10 ans en usage normal</li>
+                <li>5 à 7 ans en usage intensif</li>
+                <li>La garantie est généralement de 2 à 3 ans</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- Conclusion -->
+        <div class="bg-indigo-50 p-6 rounded-lg">
+          <h2 class="text-xl font-bold text-indigo-900 mb-4">Vous avez d'autres questions ?</h2>
+          <p class="text-indigo-700">
+            Nos experts sont là pour vous aider. N'hésitez pas à nous contacter pour obtenir des réponses personnalisées à vos questions sur les bornes de recharge.
+          </p>
+          <a 
+            href="/contact" 
+            class="inline-block mt-4 px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
+          >
+            Contactez-nous
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+  <Footer />
+</Layout>

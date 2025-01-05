@@ -1,0 +1,25 @@
+---
+---
+<div class="relative">
+  <input
+    type="search"
+    id="vehicleSearch"
+    placeholder="Rechercher un véhicule..."
+    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+  />
+</div>
+
+<script>
+  import { debounce } from '../../lib/utils/debounce';
+
+  const searchInput = document.getElementById('vehicleSearch') as HTMLInputElement;
+  
+  if (searchInput) {
+    searchInput.addEventListener('input', debounce((e: Event) => {
+      const target = e.target as HTMLInputElement;
+      document.dispatchEvent(new CustomEvent('vehicle-search', {
+        detail: { query: target.value }
+      }));
+    }, 300));
+  }
+</script>

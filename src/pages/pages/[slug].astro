@@ -1,0 +1,39 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { getPages } from '../../lib/wordpress/pages';
+import { cleanHtml } from '../../lib/wordpress/utils';
+
+export async function getStaticPaths() {
+  const pages = await getPages();
+  return pages.map(page => ({
+    params: { slug: page.slug },
+    props: { page }
+  }));
+}
+
+const { page } = Astro.props;
+
+if (!page) {
+  return new Response(null, {
+    status: 404,
+    statusText: 'Not found'
+  });
+}
+
+const cleanTitle = cleanHtml(page.title.rendered);
+---
+
+<Layout title={cleanTitle}>
+  <Header />
+  <main class="bg-gray-50 min-h-screen py-16">
+    <div class="container mx-auto px-4">
+      <div class="max-w-3xl mx-auto bg-white rounded-2xl shadow-lg p-8">
+        <h1 class="text-3xl font-bold text-gray-900 mb-8">{cleanTitle}</h1>
+        <div class="prose prose-indigo max-w-none" set:html={page.content.rendered} />
+      </div>
+    </div>
+  </main>
+  <Footer />
+</Layout>

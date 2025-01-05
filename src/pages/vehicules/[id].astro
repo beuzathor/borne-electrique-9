@@ -1,0 +1,128 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { electricVehicles, getVehicleById } from '../../lib/data/electricVehicles';
+
+export function getStaticPaths() {
+  return electricVehicles.map(vehicle => ({
+    params: { id: vehicle.id },
+    props: { vehicle }
+  }));
+}
+
+const { vehicle } = Astro.props;
+
+if (!vehicle) {
+  return new Response(null, {
+    status: 404,
+    statusText: 'Not found'
+  });
+}
+---
+
+<Layout title={`${vehicle.brand} ${vehicle.model} - ElectroBorne`}>
+  <Header />
+  <main class="min-h-screen bg-gray-50 py-12">
+    <div class="container mx-auto px-4">
+      <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+        <div class="aspect-w-16 aspect-h-9 bg-gray-200">
+          <img 
+            src={`/vehicles/${vehicle.id}.jpg`}
+            alt={`${vehicle.brand} ${vehicle.model}`}
+            class="w-full h-full object-cover"
+          />
+        </div>
+
+        <div class="p-8">
+          <div class="max-w-3xl mx-auto">
+            <div class="flex justify-between items-start mb-6">
+              <div>
+                <h1 class="text-3xl font-bold text-gray-900">{vehicle.brand} {vehicle.model}</h1>
+                <p class="text-lg text-gray-600">{vehicle.year}</p>
+              </div>
+              <span class="px-4 py-2 bg-indigo-100 text-indigo-800 rounded-full text-sm font-medium">
+                {vehicle.category}
+              </span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div class="space-y-6">
+                <div>
+                  <h2 class="text-xl font-semibold text-gray-900 mb-4">Performance</h2>
+                  <dl class="space-y-3">
+                    <div class="flex justify-between">
+                      <dt class="text-gray-600">Autonomie WLTP</dt>
+                      <dd class="font-medium">{vehicle.range.wltp} km</dd>
+                    </div>
+                    <div class="flex justify-between">
+                      <dt class="text-gray-600">Autonomie réelle estimée</dt>
+                      <dd class="font-medium">{vehicle.range.real} km</dd>
+                    </div>
+                    <div class="flex justify-between">
+                      <dt class="text-gray-600">Consommation</dt>
+                      <dd class="font-medium">{vehicle.consumption} kWh/100km</dd>
+                    </div>
+                  </dl>
+                </div>
+
+                <div>
+                  <h2 class="text-xl font-semibold text-gray-900 mb-4">Batterie & Recharge</h2>
+                  <dl class="space-y-3">
+                    <div class="flex justify-between">
+                      <dt class="text-gray-600">Capacité batterie</dt>
+                      <dd class="font-medium">{vehicle.batteryCapacity} kWh</dd>
+                    </div>
+                    <div class="flex justify-between">
+                      <dt class="text-gray-600">Puissance AC max</dt>
+                      <dd class="font-medium">{vehicle.charging.acPower} kW</dd>
+                    </div>
+                    {vehicle.charging.dcPower && (
+                      <div class="flex justify-between">
+                        <dt class="text-gray-600">Puissance DC max</dt>
+                        <dd class="font-medium">{vehicle.charging.dcPower} kW</dd>
+                      </div>
+                    )}
+                  </dl>
+                </div>
+              </div>
+
+              <div class="space-y-6">
+                <div>
+                  <h2 class="text-xl font-semibold text-gray-900 mb-4">Temps de charge</h2>
+                  <dl class="space-y-3">
+                    <div class="flex justify-between">
+                      <dt class="text-gray-600">Charge AC (0-100%)</dt>
+                      <dd class="font-medium">{vehicle.charging.timeToCharge.ac}h</dd>
+                    </div>
+                    {vehicle.charging.timeToCharge.dc && (
+                      <div class="flex justify-between">
+                        <dt class="text-gray-600">Charge DC (20-80%)</dt>
+                        <dd class="font-medium">{vehicle.charging.timeToCharge.dc}min</dd>
+                      </div>
+                    )}
+                  </dl>
+                </div>
+
+                <div>
+                  <h2 class="text-xl font-semibold text-gray-900 mb-4">Prix</h2>
+                  <div class="bg-gray-50 p-6 rounded-xl">
+                    <p class="text-3xl font-bold text-gray-900 mb-2">
+                      {vehicle.price.base.toLocaleString()}€
+                    </p>
+                    {vehicle.price.withBonus && (
+                      <p class="text-xl text-green-600">
+                        {vehicle.price.withBonus.toLocaleString()}€ avec bonus écologique
+                      </p>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <Footer />
+</Layout>

@@ -1,0 +1,43 @@
+---
+interface Props {
+  title: string;
+  date: string;
+  featuredImage?: string;
+}
+
+const { title, date, featuredImage } = Astro.props;
+
+const formattedDate = new Date(date).toLocaleDateString('fr-FR', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric'
+});
+
+const defaultImage = 'https://images.unsplash.com/photo-1593941707882-a5bba14938c7?auto=format&fit=crop&q=80&w=1920&h=600';
+---
+<div class="relative h-[60vh] min-h-[400px] max-h-[600px] bg-gray-900 overflow-hidden">
+  <!-- Featured Image -->
+  <div class="absolute inset-0">
+    <img 
+      src={featuredImage || defaultImage} 
+      alt={title}
+      class="w-full h-full object-cover opacity-50"
+    />
+    <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/50"></div>
+  </div>
+
+  <!-- Content -->
+  <div class="absolute inset-0 flex items-center">
+    <div class="container mx-auto px-4">
+      <div class="max-w-4xl">
+        <time datetime={date} class="text-indigo-300 font-medium mb-4 block">
+          {formattedDate}
+        </time>
+        <h1 
+          class="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight"
+          set:html={title}
+        />
+      </div>
+    </div>
+  </div>
+</div>

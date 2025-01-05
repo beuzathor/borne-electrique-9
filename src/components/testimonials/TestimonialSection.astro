@@ -1,0 +1,25 @@
+---
+import { testimonials } from './data';
+import TestimonialCard from './TestimonialCard.astro';
+---
+<section class="py-24 bg-gradient-to-br from-gray-50 to-white">
+  <div class="container mx-auto px-4">
+    <div class="text-center max-w-3xl mx-auto mb-16">
+      <span class="inline-block px-4 py-2 bg-indigo-100 text-indigo-700 rounded-full text-sm font-semibold mb-4">
+        Témoignages
+      </span>
+      <h2 class="text-4xl font-bold text-gray-900 mb-4">
+        Ce que disent nos lecteurs
+      </h2>
+      <p class="text-xl text-gray-600">
+        Découvrez les expériences de notre communauté avec ElectroBorne
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
+      {testimonials.map(testimonial => (
+        <TestimonialCard testimonial={testimonial} />
+      ))}
+    </div>
+  </div>
+</section>

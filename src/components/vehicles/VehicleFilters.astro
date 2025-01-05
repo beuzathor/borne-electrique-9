@@ -1,0 +1,70 @@
+---
+import { VEHICLE_CATEGORIES, PRICE_RANGES } from '../../lib/constants/vehicleFilters';
+---
+
+<div class="bg-white p-6 rounded-lg shadow">
+  <h3 class="text-lg font-semibold text-gray-900 mb-4">Filtres</h3>
+  
+  <div class="space-y-6">
+    <!-- Catégories -->
+    <div>
+      <h4 class="font-medium text-gray-700 mb-2">Catégorie</h4>
+      <div class="space-y-2">
+        {VEHICLE_CATEGORIES.map(category => (
+          <label class="flex items-center">
+            <input
+              type="checkbox"
+              name="category"
+              value={category}
+              class="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+            />
+            <span class="ml-2 text-sm text-gray-600 capitalize">{category}</span>
+          </label>
+        ))}
+      </div>
+    </div>
+
+    <!-- Prix -->
+    <div>
+      <h4 class="font-medium text-gray-700 mb-2">Prix</h4>
+      <div class="space-y-2">
+        {PRICE_RANGES.map(range => (
+          <label class="flex items-center">
+            <input
+              type="checkbox"
+              name="priceRange"
+              value={`${range.min}-${range.max}`}
+              class="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+            />
+            <span class="ml-2 text-sm text-gray-600">{range.label}</span>
+          </label>
+        ))}
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+  
+  checkboxes.forEach(checkbox => {
+    checkbox.addEventListener('change', () => {
+      const filters = {
+        categories: Array.from(document.querySelectorAll('input[name="category"]:checked'))
+          .map(cb => (cb as HTMLInputElement).value),
+        priceRanges: Array.from(document.querySelectorAll('input[name="priceRange"]:checked'))
+          .map(cb => {
+            const [min, max] = (cb as HTMLInputElement).value.split('-');
+            return {
+              min: parseInt(min),
+              max: max === 'Infinity' ? Infinity : parseInt(max)
+            };
+          })
+      };
+
+      document.dispatchEvent(new CustomEvent('vehicle-filter', {
+        detail: { filters }
+      }));
+    });
+  });
+</script>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Cercle principal -->
+  <circle cx="100" cy="100" r="90" fill="#4F46E5" />
+  
+  <!-- Éclair stylisé -->
+  <path d="M100 40 L85 100 L115 100 L100 160" stroke="#FCD34D" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+  
+  <!-- Points de connexion -->
+  <circle cx="100" cy="40" r="6" fill="#FCD34D" />
+  <circle cx="100" cy="160" r="6" fill="#FCD34D" />
+  
+  <!-- Anneaux décoratifs -->
+  <circle cx="100" cy="100" r="75" stroke="#818CF8" stroke-width="2" stroke-dasharray="4 4" />
+</svg>

@@ -1,0 +1,20 @@
+---
+interface Props {
+  title: string;
+  date: string;
+}
+
+const { title, date } = Astro.props;
+
+const formattedDate = new Date(date).toLocaleDateString('fr-FR', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric'
+});
+---
+<header class="mb-12">
+  <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6" set:html={title} />
+  <time datetime={date} class="text-lg text-indigo-600 font-medium">
+    {formattedDate}
+  </time>
+</header>

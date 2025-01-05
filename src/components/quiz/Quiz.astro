@@ -1,0 +1,208 @@
+---
+import { quizQuestions } from './QuizData';
+import QuizCard from './QuizCard.astro';
+---
+
+<section class="py-16 bg-gradient-to-br from-indigo-50 to-blue-50">
+  <div class="container mx-auto px-4">
+    <!-- En-tête du quiz -->
+    <div class="text-center mb-12">
+      <span class="inline-block px-4 py-2 bg-indigo-100 text-indigo-700 rounded-full text-sm font-semibold mb-4">
+        ⚡ Testez vos connaissances
+      </span>
+      <h2 class="text-3xl font-bold text-gray-900 mb-4">
+        Quiz : Êtes-vous un expert des bornes de recharge ?
+      </h2>
+      <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+        Relevez le défi et découvrez si vous maîtrisez vraiment le sujet des bornes de recharge électrique !
+      </p>
+    </div>
+
+    <!-- Carte du quiz -->
+    <div 
+      id="quiz-container" 
+      class="relative"
+      data-questions={JSON.stringify(quizQuestions)}
+    >
+      <QuizCard
+        currentQuestion={1}
+        totalQuestions={quizQuestions.length}
+        question={quizQuestions[0].question}
+        options={quizQuestions[0].options}
+        isAnswered={false}
+        correctAnswer={quizQuestions[0].correctAnswer}
+        explanation={quizQuestions[0].explanation}
+      />
+    </div>
+  </div>
+</section>
+
+<script>
+  interface Question {
+    id: number;
+    question: string;
+    options: string[];
+    correctAnswer: number;
+    explanation: string;
+  }
+
+  interface Answer {
+    question: string;
+    userAnswer: string;
+    correctAnswer: string;
+    isCorrect: boolean;
+    explanation: string;
+  }
+
+  let currentQuestionIndex = 0;
+  let score = 0;
+  let isAnswered = false;
+  let questions: Question[] = [];
+  let userAnswers: Answer[] = [];
+
+  function initializeQuiz() {
+    const container = document.getElementById('quiz-container');
+    if (!container) return;
+
+    const questionsData = container.getAttribute('data-questions');
+    if (!questionsData) return;
+    
+    questions = JSON.parse(questionsData);
+
+    const buttons = document.querySelectorAll('[data-index]');
+    buttons.forEach(button => {
+      button.addEventListener('click', handleAnswer);
+    });
+  }
+
+  function handleAnswer(event: Event) {
+    if (isAnswered) return;
+    
+    const button = event.currentTarget as HTMLButtonElement;
+    const selectedAnswer = parseInt(button.dataset.index || '0');
+    isAnswered = true;
+
+    const currentQuestion = questions[currentQuestionIndex];
+    const isCorrect = selectedAnswer === currentQuestion.correctAnswer;
+    
+    if (isCorrect) {
+      score++;
+    }
+
+    // Enregistrer la réponse
+    userAnswers.push({
+      question: currentQuestion.question,
+      userAnswer: currentQuestion.options[selectedAnswer],
+      correctAnswer: currentQuestion.options[currentQuestion.correctAnswer],
+      isCorrect,
+      explanation: currentQuestion.explanation
+    });
+
+    // Réduire le délai à 1 seconde
+    setTimeout(() => {
+      currentQuestionIndex++;
+      if (currentQuestionIndex < questions.length) {
+        updateQuestion();
+      } else {
+        showResults();
+      }
+    }, 1000);
+  }
+
+  function updateQuestion() {
+    isAnswered = false;
+    const container = document.getElementById('quiz-container');
+    if (container) {
+      const currentQuestion = questions[currentQuestionIndex];
+      container.innerHTML = `
+        <div class="bg-white rounded-2xl shadow-lg p-6 max-w-2xl mx-auto">
+          <div class="mb-6">
+            <div class="flex justify-between text-sm text-gray-600 mb-2">
+              <span>Question ${currentQuestionIndex + 1}/${questions.length}</span>
+              <span class="text-indigo-600 font-medium">${Math.round(((currentQuestionIndex + 1)/questions.length) * 100)}%</span>
+            </div>
+            <div class="h-2 bg-gray-200 rounded-full">
+              <div 
+                class="h-full bg-indigo-600 rounded-full transition-all duration-300"
+                style="width: ${((currentQuestionIndex + 1)/questions.length) * 100}%"
+              ></div>
+            </div>
+          </div>
+
+          <h3 class="text-xl font-bold text-gray-900 mb-6">${currentQuestion.question}</h3>
+
+          <div class="space-y-3">
+            ${currentQuestion.options.map((option, index) => `
+              <button
+                class="w-full text-left p-4 rounded-xl border-2 border-gray-200 hover:border-indigo-500 hover:bg-indigo-50 transition-all duration-200"
+                data-index="${index}"
+              >
+                <div class="flex items-center">
+                  <span class="w-8 h-8 rounded-full border-2 border-current flex items-center justify-center mr-3 text-gray-400">
+                    ${String.fromCharCode(65 + index)}
+                  </span>
+                  <span class="flex-1 text-gray-700">${option}</span>
+                </div>
+              </button>
+            `).join('')}
+          </div>
+        </div>
+      `;
+
+      const buttons = container.querySelectorAll('[data-index]');
+      buttons.forEach(button => {
+        button.addEventListener('click', handleAnswer);
+      });
+    }
+  }
+
+  function showResults() {
+    const container = document.getElementById('quiz-container');
+    if (container) {
+      container.innerHTML = `
+        <div class="bg-white rounded-2xl shadow-lg p-8 max-w-2xl mx-auto">
+          <div class="text-center mb-8">
+            <h3 class="text-2xl font-bold text-gray-900 mb-4">Quiz terminé !</h3>
+            <p class="text-xl text-gray-600">
+              Votre score : <span class="font-bold text-indigo-600">${score}/${questions.length}</span>
+            </p>
+          </div>
+
+          <div class="space-y-6 mb-8">
+            ${userAnswers.map((answer, index) => `
+              <div class="p-4 rounded-lg ${answer.isCorrect ? 'bg-green-50' : 'bg-red-50'}">
+                <p class="font-semibold text-gray-900 mb-2">Question ${index + 1}: ${answer.question}</p>
+                <div class="space-y-1 text-sm">
+                  <p>
+                    <span class="text-gray-600">Votre réponse :</span>
+                    <span class="${answer.isCorrect ? 'text-green-600' : 'text-red-600'}">
+                      ${answer.userAnswer}
+                    </span>
+                  </p>
+                  ${!answer.isCorrect ? `
+                    <p>
+                      <span class="text-gray-600">Bonne réponse :</span>
+                      <span class="text-green-600">${answer.correctAnswer}</span>
+                    </p>
+                  ` : ''}
+                  <p class="text-gray-600 mt-2">${answer.explanation}</p>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+
+          <div class="text-center">
+            <button 
+              onclick="location.reload()"
+              class="px-6 py-3 bg-indigo-600 text-white rounded-full font-semibold hover:bg-indigo-700 transition-colors"
+            >
+              Recommencer le quiz
+            </button>
+          </div>
+        </div>
+      `;
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', initializeQuiz);
+</script>
