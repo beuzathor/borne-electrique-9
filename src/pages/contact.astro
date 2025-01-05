@@ -77,12 +77,10 @@ if (form && formStatus && submitButton) {
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     
-    // Désactiver le bouton pendant l'envoi
     submitButton.disabled = true;
     submitButton.textContent = 'Envoi en cours...';
     
     try {
-      // Récupérer les données du formulaire
       const formData = new FormData(form);
       const data = {
         name: formData.get('name'),
@@ -90,8 +88,8 @@ if (form && formStatus && submitButton) {
         message: formData.get('message')
       };
 
-      // Envoyer la requête
-      const response = await fetch('/api/contact', {
+      // Envoyer directement au script PHP
+      const response = await fetch('/mail/send.php', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -101,7 +99,6 @@ if (form && formStatus && submitButton) {
 
       const result = await response.json();
 
-      // Afficher le message de statut
       formStatus.classList.remove('hidden');
       if (result.success) {
         formStatus.querySelector('p')!.className = 'text-center py-3 px-4 rounded-md bg-green-100 text-green-700';
@@ -117,7 +114,6 @@ if (form && formStatus && submitButton) {
       formStatus.querySelector('p')!.className = 'text-center py-3 px-4 rounded-md bg-red-100 text-red-700';
       formStatus.querySelector('p')!.textContent = 'Une erreur est survenue lors de l\'envoi. Veuillez réessayer plus tard.';
     } finally {
-      // Réactiver le bouton
       submitButton.disabled = false;
       submitButton.textContent = 'Envoyer';
     }
