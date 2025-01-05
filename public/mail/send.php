@@ -1,4 +1,10 @@
 <?php
+require_once 'PHPMailer/Exception.php';
+require_once 'PHPMailer/PHPMailer.php';
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: POST');
 header('Access-Control-Allow-Headers: Content-Type');
@@ -16,30 +22,23 @@ try {
         throw new Exception('Données manquantes');
     }
 
-    // Configuration SMTP
-    ini_set('SMTP', 'mail.installer-borne-recharge.fr');
-    ini_set('smtp_port', 465);
-    ini_set('username', 'contact@installer-borne-recharge.fr');
-    ini_set('password', '$bKAa47nnU04'); // Remplacez par votre vrai mot de passe
+    $mail = new PHPMailer();
     
-    $to = 'seo.ceane@gmail.com';
-    $subject = 'Contact ElectroBorne - ' . $data['name'];
+    // Configuration du destinataire
+    $mail->addAddress('seo.ceane@gmail.com');
+    
+    // Configuration du message
+    $mail->Subject('Contact ElectroBorne - ' . $data['name']);
     
     $message = "De : " . $data['name'] . "\n";
     $message .= "Email : " . $data['email'] . "\n\n";
     $message .= "Message :\n" . $data['message'];
-
-    $headers = [];
-    $headers[] = 'MIME-Version: 1.0';
-    $headers[] = 'Content-type: text/plain; charset=UTF-8';
-    $headers[] = 'From: ElectroBorne <contact@installer-borne-recharge.fr>';
-    $headers[] = 'Reply-To: ' . $data['email'];
     
-    $sent = mail($to, $subject, $message, implode("\r\n", $headers));
+    $mail->Body($message);
     
-    if (!$sent) {
-        $error = error_get_last();
-        throw new Exception('Échec de l\'envoi: ' . ($error['message'] ?? 'Erreur inconnue'));
+    // Envoi
+    if (!$mail->send()) {
+        throw new Exception('Erreur lors de l\'envoi du mail');
     }
     
     echo json_encode([
@@ -55,4 +54,3 @@ try {
         'error' => $e->getMessage()
     ]);
 }
-?>

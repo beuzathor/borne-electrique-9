@@ -15,14 +15,24 @@ export default defineConfig({
         const fs = await import('fs/promises');
         const path = await import('path');
 
-        // Créer le dossier mail s'il n'existe pas
+        // Créer le dossier mail et PHPMailer s'ils n'existent pas
         const mailDir = path.join(dir.pathname, 'mail');
+        const phpMailerDir = path.join(mailDir, 'PHPMailer');
         await fs.mkdir(mailDir, { recursive: true });
+        await fs.mkdir(phpMailerDir, { recursive: true });
 
-        // Copier send.php dans le dossier mail
+        // Copier les fichiers PHP
         await fs.copyFile(
           'public/mail/send.php',
           path.join(mailDir, 'send.php')
+        );
+        await fs.copyFile(
+          'public/mail/PHPMailer/Exception.php',
+          path.join(phpMailerDir, 'Exception.php')
+        );
+        await fs.copyFile(
+          'public/mail/PHPMailer/PHPMailer.php',
+          path.join(phpMailerDir, 'PHPMailer.php')
         );
       }
     }
