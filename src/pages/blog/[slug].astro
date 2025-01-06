@@ -5,6 +5,7 @@ import Footer from '../../components/Footer.astro';
 import PostHero from '../../components/blog/post/PostHero.astro';
 import PostContent from '../../components/blog/post/PostContent.astro';
 import RelatedPosts from '../../components/blog/post/RelatedPosts.astro';
+import PostMeta from '../../components/seo/PostMeta.astro';
 import { getPosts } from '../../lib/wordpress/posts';
 import { getPostBySlug } from '../../lib/wordpress/posts';
 
@@ -26,11 +27,11 @@ if (!post) {
   });
 }
 
-// Get featured image URL from _embedded data if available
 const featuredImage = post._embedded?.['wp:featuredmedia']?.[0]?.source_url;
 ---
 
-<Layout title={post.title.rendered}>
+<Layout>
+  <PostMeta post={post} slot="head" />
   <Header />
   <main class="min-h-screen bg-white">
     <PostHero 

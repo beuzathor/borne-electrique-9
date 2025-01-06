@@ -1,0 +1,22 @@
+---
+import type { WPPost } from '../../lib/wordpress/types';
+
+interface Props {
+  post: WPPost;
+}
+
+const { post } = Astro.props;
+
+// Valeurs par défaut si les métadonnées ne sont pas définies
+const title = post.meta_title || post.title.rendered;
+const description = post.meta_description || post.excerpt.rendered.replace(/<[^>]*>/g, '').slice(0, 160);
+
+// Utiliser uniquement le slug pour l'URL canonique
+const canonical = `/${post.slug}`;
+---
+
+<Fragment>
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={canonical} />
+</Fragment>

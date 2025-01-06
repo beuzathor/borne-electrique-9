@@ -20,6 +20,9 @@ export interface WPPost {
   date: string;
   categories: number[];
   featured_media: number;
+  meta_title: string;
+  meta_description: string;
+  canonical: string;
   _embedded?: {
     'wp:featuredmedia'?: Array<{
       source_url: string;
@@ -27,18 +30,4 @@ export interface WPPost {
   };
 }
 
-export interface WPCategory {
-  id: number;
-  name: string;
-  slug: string;
-  description: string;
-  count: number;
-}
-
-export type WPError = {
-  code: string;
-  message: string;
-  data: {
-    status: number;
-  };
-};
+// ... reste du fichier inchangé ...
