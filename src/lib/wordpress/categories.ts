@@ -12,6 +12,7 @@ export async function getPostsByCategory(categoryId: number, page = 1): Promise<
   return wpFetch<WPPost[]>(WP_CONFIG.endpoints.posts, {
     categories: categoryId.toString(),
     page: page.toString(),
-    _embed: 'true'
+    _embed: 'true',
+    per_page: WP_CONFIG.perPage.toString()
   });
 }

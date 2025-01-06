@@ -5,35 +5,64 @@ import Footer from '../../../components/Footer.astro';
 import PostCard from '../../../components/blog/PostCard.astro';
 import CategoryHeader from '../../../components/blog/CategoryHeader.astro';
 import Pagination from '../../../components/common/Pagination.astro';
-import { getCategories } from '../../../lib/wordpress/categories';
-import { getPostsByCategory } from '../../../lib/wordpress/categories';
+import { getCategories, getPostsByCategory } from '../../../lib/wordpress/categories';
 import { cleanHtml } from '../../../lib/wordpress/utils';
 
 export async function getStaticPaths() {
   const response = await getCategories();
   const categories = response.data || [];
   
-  return categories.map(category => ({
-    params: { slug: category.slug },
-    props: { category }
+  return Promise.all(categories.map(async (category) => {
+    const postsResponse = await getPostsByCategory(category.id, 1);
+    return {
+      params: { slug: category.slug },
+      props: { 
+        category,
+        posts: postsResponse.data || [],
+        totalPages: postsResponse.totalPages || 1
+      }
+    };
   }));
 }
 
-const { category } = Astro.props;
-const response = await getPostsByCategory(category.id, 1);
-const posts = response.data || [];
-const currentPage = 1;
-
-const title = `${cleanHtml(category.name)} - Articles sur les bornes de recharge - ElectroBorne`;
-const description = `Découvrez tous nos articles sur ${cleanHtml(category.name)}. Guides, conseils et actualités sur les bornes de recharge électrique.`;
-const canonical = `https://www.installer-borne-recharge.fr/blog/category/${category.slug}`;
+const { category, posts, totalPages } = Astro.props;
 ---
 
-<Layout 
-  title={title}
-  description={description}
-  canonical={canonical}
->
+<Layout title={`${cleanHtml(category.name)} - ElectroBorne`}>
   <Header />
-  <!-- Reste du code inchangé -->
+  <main class="bg-gray-50 min-h-screen">
+    <CategoryHeader 
+      category={{
+        name: cleanHtml(category.name),
+        description: category.description,
+        count: category.count
+      }} 
+      showDescription={true} 
+    />
+    
+    <div class="container mx-auto px-4 py-12">
+      {posts.length > 0 ? (
+        <>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {posts.map(post => (
+              <PostCard post={post} />
+            ))}
+          </div>
+          
+          {totalPages > 1 && (
+            <Pagination 
+              currentPage={1} 
+              totalPages={totalPages} 
+              baseUrl={`/blog/category/${category.slug}`} 
+            />
+          )}
+        </>
+      ) : (
+        <div class="text-center py-12">
+          <p class="text-gray-600">Aucun article dans cette catégorie</p>
+        </div>
+      )}
+    </div>
+  </main>
+  <Footer />
 </Layout>
